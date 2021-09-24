@@ -9,6 +9,17 @@
                 <model>Fondy\Fondy\Model\Fondy</model>
                 <active>1</active>
                 <title>Fondy</title>
+                <cards_payment_status>1</cards_payment_status>
+                <cards_payment_title>Pay by Credit Card</cards_payment_title>
+                <cards_payment_type>redirect</cards_payment_type>
+                <bank_links_payment_status>1</bank_links_payment_status>
+                <bank_links_payment_title>Pay by Bank</bank_links_payment_title>
+                <bank_links_payment_type>redirect</bank_links_payment_type>
+                <wallets_payment_status>1</wallets_payment_status>
+                <wallets_payment_title>Pay by ApplePay/GooglePay</wallets_payment_title>
+                <order_status>processing</order_status>
+                <order_status_if_canceled>canceled</order_status_if_canceled>
+                <order_status_in_progress>pending</order_status_in_progress>
                 <payment_action>https://api.fondy.eu/api/checkout/redirect/</payment_action>
             </fondy>
             <fondy_direct>

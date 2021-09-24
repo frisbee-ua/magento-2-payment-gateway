@@ -5,3 +5,24 @@ Pay order №,Оплата заказа №
 Authorize,Предавторизация
 Payment,Оплата
 Place Order,Оплатить
+Cards Payment Method,Способ оплаты картами
+Cards,Карты
+Redirect,Перенаправить
+Embedded,Встроенный
+Pay by Credit Card,Оплата кредитной картой
+Pay by Bank,Оплата через банк
+Pay by ApplePay/GooglePay,Оплата через ApplePay / GooglePay
+Enable Cards Payments,Разрешить карточные платежи
+Cards Payment Title,Название платежа картой
+Cards Payment Type,Тип платежа по картам
+Bank Links,Банковские ссылки
+Enable Bank Links Payments,Включить платежи по банковским ссылкам
+Bank Links Payment Title,Название платежа по банковским ссылкам
+Bank Links Payment Type,Банковские ссылки Тип платежа
+Enable Wallets Payments,Enable Wallets Payments1 Включить платежи с помощью кошельков
+Wallets Payment Title,Название платежа в кошельках
+Title,Заголовок
+Description,Описание
+Totally Refunded,Полностью возвращено
+Partially Refunded,Частично возвращено
+Amount,Сумма

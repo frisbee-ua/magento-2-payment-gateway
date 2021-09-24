@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../app/code/Magento/Webapi/etc/webapi.xsd">
-    <route url="/V1/fondy/get-payment-token" method="POST">
-        <service class="Fondy\Fondy\Api\ApiInterface" method="getToken"/>
+    <route url="/V1/fondy/payment" method="POST">
+        <service class="Fondy\Fondy\Controller\Api\ApiInterface" method="payment"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>

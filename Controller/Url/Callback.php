@@ -2,14 +2,13 @@
 
 namespace Fondy\Fondy\Controller\Url;
 
+use Fondy\Fondy\Handler\CallbackHandler;
 use Magento\Framework\App\Action\Action;
-use Magento\Sales\Model\Order;
-use Symfony\Component\Config\Definition\Exception\Exception;
 use Magento\Framework\App\CsrfAwareActionInterface;
 use Magento\Framework\App\Request\InvalidRequestException;
 use Magento\Framework\App\RequestInterface;
 
-class FondySuccess extends Action implements CsrfAwareActionInterface
+class Callback extends Action implements CsrfAwareActionInterface
 {
     /** @var \Magento\Framework\View\Result\PageFactory */
     protected $resultPageFactory;
@@ -19,7 +18,12 @@ class FondySuccess extends Action implements CsrfAwareActionInterface
     protected $jsonResultFactory;
 
     /**
-     * FondySuccess constructor.
+     * @var \Fondy\Fondy\Handler\CallbackHandler
+     */
+    protected $callbackHandler;
+
+    /**
+     * FondyResponse constructor.
      * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      * @param \Magento\Framework\Controller\Result\JsonFactory $jsonResultFactory
@@ -28,11 +32,13 @@ class FondySuccess extends Action implements CsrfAwareActionInterface
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
-        \Magento\Framework\Controller\Result\JsonFactory $jsonResultFactory
+        \Magento\Framework\Controller\Result\JsonFactory $jsonResultFactory,
+        CallbackHandler $callbackHandler
     )
     {
         $this->resultPageFactory = $resultPageFactory;
         $this->jsonResultFactory = $jsonResultFactory;
+        $this->callbackHandler = $callbackHandler;
         parent::__construct($context);
     }
 
@@ -57,31 +63,13 @@ class FondySuccess extends Action implements CsrfAwareActionInterface
     }
 
     /**
-     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Json|\Magento\Framework\Controller\ResultInterface
-     * Load the page defined
+     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface|void
+     * @throws \Exception
      */
     public function execute()
     {
-        //get request data
-        $data = $this->getRequest()->getPostValue();
-        if (empty($data)) {
-            $callback = json_decode(file_get_contents("php://input"));
-            if (empty($callback))
-                throw new Exception(__('Request Parameter is not matched.'));
-            $data = array();
-            foreach ($callback as $key => $val) {
-                $data[$key] = $val;
-            }
-        }
-        /**
-         * $paymentMethod
-         */
-        $model = 'Fondy\Fondy\Model\Fondy';
-        $paymentMethod = $this->_objectManager->create($model);
-        $response = $paymentMethod->processResponse($data);
-        $result = $this->jsonResultFactory->create();
-        $result->setData(['result' => $response]);
-        return $result;
+        $this->callbackHandler->execute();
+        $this->_redirect('checkout/onepage/success');
     }
 
 }

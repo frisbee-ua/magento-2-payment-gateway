@@ -1,0 +1,13 @@
+#fondy_https_required, #fondy_reload { color:red; display:none; }
+.complex.fondy-pay-section .fondy-pay-logo { display:inline-block; vertical-align: middle; margin: 0 0px 0 20px; width: 180px; height:32px; background-repeat: no-repeat, no-repeat, no-repeat; background-image: url('logo.svg'); }
+.complex.fondy-pay-section .heading strong .fondy-payment-byline strong { font-weight: bold; }
+.section-config.with-button.fondy-pay-section .config-heading strong { font-weight: normal; }
+.complex.fondy-pay-section .button-container { float:right; }
+.complex.fondy-pay-section .fondy-payment-byline { display: inline-block; vertical-align: middle; width: 50%; }
+.fondy-pay-section.section-config.active > .admin__collapsible-block + input + fieldset { margin-left: 40px; }
+
+.apake-getstarted { display:inline-block; padding:1em 0em; }
+.apake-or { display:inline-block; }
+#fondy_autokeyexchange_back { display:none; margin-bottom:1em; margin-top:-0.5em; }
+#fondy_autokeyexchange td.creds { width:10%; }
+.autokeyexchange-wrapper-set.active .admin__collapsible-block { display:none; }

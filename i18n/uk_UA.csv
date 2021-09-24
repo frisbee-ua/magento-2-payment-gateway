@@ -1,0 +1,28 @@
+Configure,Настроить
+Pay order №,Оплата заказа №
+"The authorized amount is %1.","Cумма оплаты %1."
+"Allowed Shipping Methods","Доступные методы доставки"
+Authorize,Предавторизация
+Payment,Оплата
+Place Order,Оплатить
+Cards Payment Method,Спосіб оплати картками
+Cards,Картки
+Redirect,Переспрямування
+Embedded,Вбудований
+Pay by Credit Card,Оплата кредитною карткою
+Pay by Bank,Оплата банком
+Pay by ApplePay/GooglePay,Оплата ApplePay/GooglePay
+Enable Cards Payments,Увімкнути платіж картками
+Cards Payment Title,Назва платіжної картки
+Cards Payment Type,Тип оплати картками,
+Bank Links,Банківські посилання
+Enable Bank Links Payments,Включить платежи по банковским ссылкам Увімкнення платежів за банківськими посиланнями
+Bank Links Payment Title,Название платежа по банковским ссылкам Назва платежу за банківськими посиланнями
+Bank Links Payment Type,Банковские ссылки Тип платежа Тип оплати за банківськими посиланнями
+Enable Wallets Payments,Включить платежи с помощью кошельков Увімкнення платежів за гаманці
+Wallets Payment Title,Право власності на оплату гаманців
+Title,Заголовок
+Description,Опис
+Totally Refunded,Повністю відшкодовано
+Partially Refunded,Частково повернено
+Amount,Сума
