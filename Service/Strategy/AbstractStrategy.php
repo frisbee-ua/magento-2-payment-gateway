@@ -87,7 +87,7 @@ abstract class AbstractStrategy
      */
     public function getRequestUrlReverse()
     {
-        return sprintf($this->getUrlPattern(),self::PATTERN_URI_REVERSE);
+        return sprintf($this->getUrlPattern(), self::PATTERN_URI_REVERSE);
     }
 
     /**

@@ -859,9 +859,9 @@ class FondyService
             unset($data['signature']);
         }
 
-        //if ($this->getSignature($data) !== $responseSignature) {
-        //    throw new Exception('Signature is not valid.');
-        //}
+        if ($this->getSignature($data) !== $responseSignature) {
+            throw new Exception('Signature is not valid.');
+        }
 
         return true;
     }
