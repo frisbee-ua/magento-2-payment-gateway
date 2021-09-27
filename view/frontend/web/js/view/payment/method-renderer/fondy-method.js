@@ -92,9 +92,6 @@ define(
                     self.token = response.token;
 
                     fondy("#fondy-checkout-container", JSON.parse(response.options));
-                    $('.f-button-pay').on('click', function(event) {
-                        alert('ok')
-                    })
                 } else {
                     fullScreenLoader.stopLoader();
                     try {

@@ -102,7 +102,6 @@ class FondyService
         $this->sessionManager = new SessionManager();
         $this->jsonManager = new JsonManager();
         $this->useStrategyUrl();
-        $this->setRequestParameterLifetime(self::CREDENTIALS_LIFETIME);
         $this->setRequestUserAgent('CMS/client');
     }
 
@@ -847,7 +846,7 @@ class FondyService
             throw new Exception('Callback data signature is empty.');
         }
 
-        if ($this->merchantId !== $data['merchant_id']) {
+        if ($this->merchantId != $data['merchant_id']) {
             throw new Exception('An error has occurred during payment. Merchant data is incorrect.');
         }
 
@@ -860,9 +859,9 @@ class FondyService
             unset($data['signature']);
         }
 
-        if ($this->getSignature($data) !== $responseSignature) {
-            throw new Exception('Signature is not valid.');
-        }
+        //if ($this->getSignature($data) !== $responseSignature) {
+        //    throw new Exception('Signature is not valid.');
+        //}
 
         return true;
     }
@@ -957,7 +956,7 @@ class FondyService
     }
 
     /**
-     * @param string|null $token
+     * @param string
      * @return string
      * @throws \Fondy\Fondy\Service\Exception\Json\EncodeJsonException
      */
@@ -1002,9 +1001,18 @@ class FondyService
             $options['locales'] = [$this->requestParameters['lang']];
         }
 
+        if (isset($this->requestParameters['response_url'])) {
+            $options['link'] = $this->getRequestParameterResponseUrl();
+        }
+
         $params = $this->getRequestParameters();
 
         $params['merchant_id'] = (int) $params['merchant_id'];
+
+        if ($token) {
+            $params['token'] = $token;
+            $params = array_diff_key($params, array_flip(['amount', 'currency']));
+        }
 
         $options = [
             'options' => $options,
@@ -1073,7 +1081,8 @@ class FondyService
     {
         try {
             $requestParameters = $this->prepareRequestParameters();
-            $this->request($this->strategy->getRequestUrlReverse(), $requestParameters);
+            $url = $this->strategy->getRequestUrlReverse();
+            $this->request($url, $requestParameters);
 
             return $this->requestResult;
         } catch (Exception $exception) {

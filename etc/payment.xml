@@ -10,8 +10,5 @@
         <method name="fondy">
             <allow_multiple_address>1</allow_multiple_address>
         </method>
-        <method name="fondy_direct">
-            <allow_multiple_address>1</allow_multiple_address>
-        </method>
     </methods>
 </payment>

@@ -15,6 +15,7 @@ use Magento\Customer\Model\Session as CustomerSession;
 use Magento\Framework\Locale\Resolver as LocaleResolver;
 use Magento\Directory\Api\CountryInformationAcquirerInterface;
 use Magento\Framework\App\ProductMetadataInterface;
+use Magento\Framework\Pricing\Helper\Data as PriceHelper;
 use Exception;
 
 final class RequestBuilder
@@ -24,52 +25,57 @@ final class RequestBuilder
     /**
      * @var FondyService
      */
-    protected $fondyService;
+    private $fondyService;
 
     /**
      * @var OrderRepositoryInterface
      */
-    protected $orderRepository;
+    private $orderRepository;
 
     /**
      * @var CheckoutSession
      */
-    protected $checkoutSession;
+    private $checkoutSession;
 
     /**
      * @var UrlInterface
      */
-    protected $urlBuilder;
+    private $urlBuilder;
 
     /**
      * @var CustomerSession
      */
-    protected $customerSession;
+    private $customerSession;
 
     /**
      * @var LocaleResolver
      */
-    protected $localeResolver;
+    private $localeResolver;
 
     /**
      * @var CountryInformationAcquirerInterface
      */
-    protected $countryInformationAcquirerInterface;
+    private $countryInformationAcquirerInterface;
 
     /**
      * @var @string
      */
-    protected $errorMessage;
+    private $errorMessage;
 
     /**
      * @var int
      */
-    protected $orderId;
+    private $orderId;
 
     /**
      * @var \Fondy\Fondy\Configuration\ConfigurationService
      */
-    protected $configurationService;
+    private $configurationService;
+
+    /**
+     * @var PriceHelper
+     */
+    private $priceHelper;
 
     /**
      * @var string
@@ -84,7 +90,8 @@ final class RequestBuilder
         CustomerSession $customerSession,
         LocaleResolver $localeResolver,
         CountryInformationAcquirerInterface $countryInformationAcquirer,
-        ConfigurationService $configurationService
+        ConfigurationService $configurationService,
+        PriceHelper $priceHelper
     ) {
         $this->fondyService = $fondyService;
         $this->orderRepository = $orderRepository;
@@ -94,6 +101,7 @@ final class RequestBuilder
         $this->localeResolver = $localeResolver;
         $this->countryInformationAcquirerInterface = $countryInformationAcquirer;
         $this->configurationService = $configurationService;
+        $this->priceHelper = $priceHelper;
     }
 
     /**
@@ -180,6 +188,7 @@ final class RequestBuilder
     public function retrieveCheckoutCredentials()
     {
         try {
+            $this->fondyService->setRequestParameterLifetime(FondyService::CREDENTIALS_LIFETIME);
             $credentials = $this->fondyService->retrieveCheckoutCredentials($this->orderId);
 
             if ($credentials) {
@@ -195,17 +204,31 @@ final class RequestBuilder
     }
 
     /**
+     * @param \Magento\Sales\Model\Order $order
      * @param string $extOrderId
      * @param float $amount
      * @return bool|object
      */
-    public function refund($extOrderId, $amount)
+    public function refund($order, $extOrderId, $amount)
     {
         try {
-            $this->fondyService->setRequestParameterOrderId($extOrderId);
-            $this->fondyService->setRequestParameterAmount($amount);
+            if ($this->configurationService->isConfigurationTestModeEnabled()) {
+                $this->fondyService->testModeEnable();
+            }
 
-            return $this->fondyService->reverse();
+            $this->fondyService->setRequestParameterOrderId($extOrderId);
+            $this->fondyService->setRequestParameterCurrency($order->getOrderCurrencyCode());
+            $this->fondyService->setRequestParameterAmount($amount);
+            $this->fondyService->setMerchantId($this->configurationService->getOptionMerchantId());
+            $this->fondyService->setSecretKey($this->configurationService->getOptionSecretKey());
+
+            $response = $this->fondyService->reverse();
+
+            if ($response) {
+                return $response;
+            }
+
+            $this->setErrorMessage($this->fondyService->getStatusMessage());
         } catch (Exception $exception) {
             $this->setErrorMessage($exception->getMessage());
         }
@@ -231,7 +254,15 @@ final class RequestBuilder
     }
 
     /**
-     * @param \Magento\Sales\Model\Order $order
+     * @return string
+     */
+    public function getStatusMessage()
+    {
+        return $this->fondyService->getStatusMessage();
+    }
+
+    /**
+     * @param \Magento\Sales\Model\Order|OrderInterface $order
      * @return string
      */
     public function generateOrderDescription(Order $order)
@@ -243,16 +274,16 @@ final class RequestBuilder
          */
         foreach ($order->getItemsCollection() as $item) {
             $description .= sprintf('Name: %s ', $item->getName());
-            $description .= sprintf('Price: %s ', $item->getPrice());
-            $description .= sprintf('Qty: %s ', $item->getQtyOrdered());
-            $description .= sprintf("Amount: %s\n", $item->getBaseRowTotal());
+            $description .= sprintf('Price: %s ', $this->formatNumberPrecision($item->getPrice()));
+            $description .= sprintf('Qty: %s ', $this->formatNumberPrecision($item->getQtyOrdered()));
+            $description .= sprintf("Amount: %s\n", $this->formatNumberPrecision($item->getBaseRowTotal()));
         }
 
         return $description;
     }
 
     /**
-     * @param \Magento\Sales\Model\Order $order
+     * @param \Magento\Sales\Model\Order|OrderInterface $order
      * @return array|string
      */
     public function generateReservationData(Order $order)
@@ -305,7 +336,7 @@ final class RequestBuilder
     }
 
     /**
-     * @param \Magento\Sales\Model\Order $order
+     * @param \Magento\Sales\Model\Order|OrderInterface $order
      * @return array
      */
     public function generateProductsParameter(Order $order)
@@ -329,7 +360,7 @@ final class RequestBuilder
     }
 
     /**
-     * @param \Magento\Sales\Model\Order $order
+     * @param \Magento\Sales\Model\Order|OrderInterface $order
      * @return array|null
      */
     public function generateMerchantData(Order $order)
@@ -418,11 +449,11 @@ final class RequestBuilder
             $this->fondyService->setRequestParameterTitle($title);
         }
 
-        return $this->fondyService->getCheckoutOptions($token);
+        return $this->fondyService->getCheckoutOptions();
     }
 
     /**
-     * @param \Magento\Sales\Model\Order $order
+     * @param \Magento\Sales\Model\Order|OrderInterface $order
      * @return float
      */
     private function getAmount(Order $order)
@@ -445,5 +476,15 @@ final class RequestBuilder
     private function getLanguageCode()
     {
         return strstr($this->localeResolver->getLocale(), '_', true);
+    }
+
+    /**
+     * @param int $number
+     * @param int $precision
+     * @return string
+     */
+    private function formatNumberPrecision($number, $precision = self::PRECISION)
+    {
+        return number_format($number, $precision);
     }
 }

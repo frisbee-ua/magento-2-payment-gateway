@@ -8,7 +8,7 @@ abstract class AbstractStrategy
     const PATTERN_URL = 'https://api.fondy.eu/api/%s/';
     const PATTERN_URL_DEV = 'https://dev2.pay.fondy.eu/api/%s/';
     const PATTERN_URI_CHECKOUT = 'checkout/%s';
-    const PATTERN_URI_REVERSE = 'reverse/%s';
+    const PATTERN_URI_REVERSE = 'reverse/order_id';
     const PATTERN_SESSION_NAME_CHECKOUT_HASH = 'fondy_checkout_%s_hash';
     const PATTERN_SESSION_NAME_CHECKOUT_CREDENTIALS = 'fondy_checkout_%s_credentials';
 
@@ -87,7 +87,7 @@ abstract class AbstractStrategy
      */
     public function getRequestUrlReverse()
     {
-        return sprintf($this->getUrlPattern(), sprintf(self::PATTERN_URI_REVERSE, static::NAME));
+        return sprintf($this->getUrlPattern(),self::PATTERN_URI_REVERSE);
     }
 
     /**

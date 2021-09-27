@@ -147,6 +147,12 @@ final class CallbackHandler
             $message = $exception->getMessage();
             $this->logger->debug($message, $exception->getTrace());
             http_response_code(500);
+            if (isset($order)) {
+                $this->orderManager->setStatus($order, $orderStatus);
+                $this->orderRepository->save($order);
+            }
+
+            throw new $exception;
         }
 
         $comment = sprintf(
@@ -190,6 +196,7 @@ final class CallbackHandler
                     $payment->setAmountPaid($amount);
                     $payment->setBaseAmountPaidOnline($amount);
                     $order->setTotalPaid($amount);
+                    $order->setBaseTotalPaid($amount);
                 }
             }
 
