@@ -4,11 +4,10 @@ namespace Fondy\Fondy\Controller\Url;
 
 use Fondy\Fondy\Handler\CallbackHandler;
 use Magento\Framework\App\Action\Action;
-use Magento\Framework\App\CsrfAwareActionInterface;
 use Magento\Framework\App\Request\InvalidRequestException;
 use Magento\Framework\App\RequestInterface;
 
-class Callback extends Action implements CsrfAwareActionInterface
+class Callback extends Action
 {
     /** @var \Magento\Framework\View\Result\PageFactory */
     protected $resultPageFactory;

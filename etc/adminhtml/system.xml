@@ -102,17 +102,6 @@
                     <label>Credit Card Types</label>
                     <source_model>Fondy\Fondy\Model\Source\Cctype</source_model>
                 </field>
-                <field id="allowed_carrier" translate="label" type="multiselect" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Allowed Shipping Methods</label>
-                    <source_model>Magento\Shipping\Model\Config\Source\Allmethods</source_model>
-                </field>
-                <field id="min_order_total" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Minimum Order Total</label>
-                </field>
-                <field id="max_order_total" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Maximum Order Total</label>
-                    <comment>Leave empty to disable limit</comment>
-                </field>
             </group>
         </section>
     </system>

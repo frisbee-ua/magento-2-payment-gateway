@@ -5,7 +5,7 @@
     <default>
         <payment>
             <fondy>
-                <group>offline</group>
+                <group>fondys</group>
                 <model>Fondy\Fondy\Model\Fondy</model>
                 <active>1</active>
                 <title>Fondy</title>

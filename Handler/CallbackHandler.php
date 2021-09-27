@@ -124,8 +124,6 @@ final class CallbackHandler
 
             if ($this->fondyService->isOrderDeclined()) {
                 $orderStatus = $this->configurationService->getOptionOrderStatusCanceled();
-            } elseif ($this->fondyService->isOrderExpired()) {
-                exit;
             } elseif ($this->fondyService->isOrderApproved()) {
                 $this->createTransaction($order, $data, $order->getGrandTotal(), Transaction::TYPE_ORDER);
                 $orderStatus = $this->configurationService->getOptionOrderStatusPaid();

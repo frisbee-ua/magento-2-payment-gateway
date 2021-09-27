@@ -14,10 +14,12 @@ class Fondy extends \Magento\Payment\Model\Method\AbstractMethod
      * @var bool
      */
     protected $_isInitializeNeeded = true;
+
     /**
      * @var bool
      */
-    protected $_isGateway = false;
+    protected $_isGateway = true;
+
     /**
      * Payment code
      *
@@ -31,14 +33,21 @@ class Fondy extends \Magento\Payment\Model\Method\AbstractMethod
      * @var bool
      */
     protected $_isOffline = false;
+
+    /**
+     * @var bool
+     */
+    protected $_canRefund = true;
+
+    /**
+     * @var bool
+     */
+    protected $_canRefundInvoicePartial = true;
+
     /**
      * Sidebar payment info block
      *
      * @var string
      */
     protected $_infoBlockType = Instructions::class;
-
-    protected $_logger;
-
-    protected $_canUseCheckout = true;
 }

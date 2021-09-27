@@ -11,3 +11,12 @@
 #fondy_autokeyexchange_back { display:none; margin-bottom:1em; margin-top:-0.5em; }
 #fondy_autokeyexchange td.creds { width:10%; }
 .autokeyexchange-wrapper-set.active .admin__collapsible-block { display:none; }
+
+.fondy-pay-section .config-heading {
+    display: inline-block;
+    width: 100%;
+}
+
+.fondy-pay-section .heading {
+    display: inline-block;
+}
