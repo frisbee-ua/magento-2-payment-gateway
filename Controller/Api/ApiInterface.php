@@ -4,7 +4,7 @@ namespace Fondy\Fondy\Controller\Api;
 
 /**
  * Interface ApiInterface
- * @package FondyService\FondyService\Api
+ * @package Fondy\Fondy\Api
  */
 interface ApiInterface
 {

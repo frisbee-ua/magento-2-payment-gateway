@@ -48,7 +48,7 @@ final class OrderManager
     }
 
     /**
-     * @param OrderInterface $order
+     * @param \Magento\Sales\Model\Order|OrderInterface $order
      * @return void
      * @throws \Exception
      */
@@ -60,10 +60,10 @@ final class OrderManager
     }
 
     /**
-     * @param \Magento\Sales\Model\Order $order
+     * @param \Magento\Sales\Model\Order|OrderInterface $order
      * @return void
      */
-    public function setOrderStatusCancelled(Order $order)
+    public function setOrderStatusCancelled(OrderInterface $order)
     {
         $orderStatusCanceled = $this->configurationService->getOptionOrderStatusCanceled();
 
@@ -71,10 +71,10 @@ final class OrderManager
     }
 
     /**
-     * @param \Magento\Sales\Model\Order $order
+     * @param \Magento\Sales\Model\Order|OrderInterface $order
      * @return void
      */
-    public function setOrderStatusPaid(Order $order)
+    public function setOrderStatusPaid(OrderInterface $order)
     {
         $orderStatusPaid = $this->configurationService->getOptionOrderStatusPaid();
 
@@ -82,10 +82,10 @@ final class OrderManager
     }
 
     /**
-     * @param \Magento\Sales\Model\Order $order
+     * @param \Magento\Sales\Model\Order|OrderInterface $order
      * @return void
      */
-    public function setOrderStatusTotallyRefunded(Order $order)
+    public function setOrderStatusTotallyRefunded(OrderInterface $order)
     {
         $orderStatusTotallyRefunded = $this->getOrderStatusTotallyRefunded();
 
@@ -93,10 +93,10 @@ final class OrderManager
     }
 
     /**
-     * @param \Magento\Sales\Model\Order $order
+     * @param \Magento\Sales\Model\Order|OrderInterface $order
      * @return void
      */
-    public function setOrderStatusPartiallyRefunded(Order $order)
+    public function setOrderStatusPartiallyRefunded(OrderInterface $order)
     {
         $orderStatusPartiallyRefunded = $this->getOrderStatusPartiallyRefunded();
 
@@ -120,11 +120,11 @@ final class OrderManager
     }
 
     /**
-     * @param \Magento\Sales\Model\Order $order
+     * @param \Magento\Sales\Model\Order|OrderInterface $order
      * @param string $orderStatus
      * @return void
      */
-    public function setStatus(Order $order, string $orderStatus)
+    public function setStatus(OrderInterface $order, string $orderStatus)
     {
         $order->setState($orderStatus);
         $order->setStatus($order->getConfig()->getStateDefaultStatus($orderStatus));
@@ -132,13 +132,13 @@ final class OrderManager
     }
 
     /**
-     * @param \Magento\Sales\Model\Order $order
+     * @param \Magento\Sales\Model\Order|OrderInterface $order
      * @param string $comment
      * @param bool $status
      * @param bool $isVisibleOnFront
      * @return \Magento\Sales\Api\Data\OrderStatusHistoryInterface
      */
-    public function addCommentToStatusHistory(Order $order, $comment, $status = false, $isVisibleOnFront = false)
+    public function addCommentToStatusHistory(OrderInterface $order, $comment, $status = false, $isVisibleOnFront = false)
     {
         try {
             return $order->addCommentToStatusHistory($comment, $status, $isVisibleOnFront);
@@ -166,7 +166,7 @@ final class OrderManager
 
     /**
      * @param string $orderId
-     * @return \Magento\Sales\Api\Data\OrderInterface
+     * @return \Magento\Sales\Api\Data\OrderInterface|Order
      * @throws \Magento\Framework\Exception\InputException
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */

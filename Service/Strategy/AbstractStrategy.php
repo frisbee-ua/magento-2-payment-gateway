@@ -79,7 +79,7 @@ abstract class AbstractStrategy
      */
     public function getRequestUrlCheckout()
     {
-        return sprintf($this->getUrlPattern(), sprintf(self::PATTERN_URI_CHECKOUT, static::NAME));
+        return sprintf($this->getUrlPattern(), sprintf(static::PATTERN_URI_CHECKOUT, static::NAME));
     }
 
     /**
@@ -87,7 +87,7 @@ abstract class AbstractStrategy
      */
     public function getRequestUrlReverse()
     {
-        return sprintf($this->getUrlPattern(), self::PATTERN_URI_REVERSE);
+        return sprintf($this->getUrlPattern(), static::PATTERN_URI_REVERSE);
     }
 
     /**

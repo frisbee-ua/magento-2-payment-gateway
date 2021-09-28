@@ -123,7 +123,7 @@ final class RequestBuilder
     }
 
     /**
-     * @param OrderInterface $order
+     * @param OrderInterface|Order $order
      * @return string
      */
     public function prepare(OrderInterface $order)

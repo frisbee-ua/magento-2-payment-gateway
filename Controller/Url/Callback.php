@@ -26,7 +26,7 @@ class Callback extends Action
      * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      * @param \Magento\Framework\Controller\Result\JsonFactory $jsonResultFactory
-     *
+     * @param CallbackHandler $callbackHandler
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,

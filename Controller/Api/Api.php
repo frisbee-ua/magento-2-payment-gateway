@@ -13,7 +13,7 @@ use Exception;
 /**
  * Class Api
  *
- * @package FondyService\FondyService\Api
+ * @package Fondy\Fondy\Api
  */
 class Api implements ApiInterface
 {

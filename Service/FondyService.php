@@ -6,7 +6,6 @@ use Fondy\Fondy\Service\Exception\Json\DecodeJsonException;
 use Fondy\Fondy\Service\Exception\Json\EncodeJsonException;
 use Fondy\Fondy\Service\Manager\SessionManager;
 use Fondy\Fondy\Service\Manager\JsonManager;
-use Fondy\Fondy\Service\Strategy\ReverseStrategy;
 use Fondy\Fondy\Service\Strategy\TokenStrategy;
 use Fondy\Fondy\Service\Strategy\UrlStrategy;
 use Exception;

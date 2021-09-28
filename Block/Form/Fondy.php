@@ -3,7 +3,7 @@
 namespace Fondy\Fondy\Block\Form;
 
 /**
- * Abstract class for FondyService payment method form
+ * Abstract class for Fondy payment method form
  */
 abstract class Fondy extends \Magento\Payment\Block\Form
 {

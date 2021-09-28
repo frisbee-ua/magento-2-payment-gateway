@@ -92,6 +92,7 @@ define(
                     self.token = response.token;
 
                     fondy("#fondy-checkout-container", JSON.parse(response.options));
+                    fullScreenLoader.stopLoader();
                 } else {
                     fullScreenLoader.stopLoader();
                     try {

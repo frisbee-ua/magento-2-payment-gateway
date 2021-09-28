@@ -71,7 +71,7 @@ class OrderRefundedObserver implements ObserverInterface
             $comment = sprintf(
                 'Message: %s Frisbee ID: %s',
                 $message,
-                isset($data['order_id']) ? $extOrderId : ''
+                $extOrderId
             );
 
             $this->orderManager->addCommentToStatusHistory($order, $comment);
