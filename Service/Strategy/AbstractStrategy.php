@@ -68,10 +68,10 @@ abstract class AbstractStrategy
     public function getUrlPattern()
     {
         if ($this->isTestModeEnabled()) {
-            return static::PATTERN_URL;
+            return static::PATTERN_URL_DEV;
         }
 
-        return static::PATTERN_URL_DEV;
+        return static::PATTERN_URL;
     }
 
     /**

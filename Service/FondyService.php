@@ -1000,10 +1000,6 @@ class FondyService
             $options['locales'] = [$this->requestParameters['lang']];
         }
 
-        if (isset($this->requestParameters['response_url'])) {
-            $options['link'] = $this->getRequestParameterResponseUrl();
-        }
-
         $params = $this->getRequestParameters();
 
         $params['merchant_id'] = (int) $params['merchant_id'];
